@@ -25,8 +25,8 @@ a{color:var(--cyan);text-decoration:none}.wrap{width:min(1050px,calc(100% - 30px
 <div class="grid">
 <div class="field"><label for="feeType">交易品种</label><select id="feeType"><option value="stock">A股</option><option value="etf">ETF</option></select></div>
 <div class="field"><label for="feeMarket">交易市场</label><select id="feeMarket"><option value="sh">沪市</option><option value="sz">深市</option><option value="bj">北交所（按A股费率估算）</option></select></div>
-<div class="field"><label for="feePrice">成交价格（元）</label><input id="feePrice" type="number" min="0" step="0.001" value="10"></div>
-<div class="field"><label for="feeQty">成交数量（股 / 份）</label><input id="feeQty" type="number" min="0" step="1" value="1000"></div>
+<div class="field"><label for="feePrice">成交价格（元）</label><input id="feePrice" type="number" min="0" step="0.001" placeholder="请输入成交价格"></div>
+<div class="field"><label for="feeQty">成交数量（股 / 份）</label><input id="feeQty" type="number" min="0" step="1" placeholder="请输入成交数量"></div>
 </div>
 <div class="results">
 <div class="metric"><span>买入费用</span><strong id="feeBuy" class="neutral">—</strong></div>
@@ -46,11 +46,11 @@ a{color:var(--cyan);text-decoration:none}.wrap{width:min(1050px,calc(100% - 30px
 <div class="field"><label for="tType">交易品种</label><select id="tType"><option value="stock">A股</option><option value="etf">ETF</option></select></div>
 <div class="field"><label for="tMarket">交易市场</label><select id="tMarket"><option value="sh">沪市</option><option value="sz">深市</option><option value="bj">北交所（按A股费率估算）</option></select></div>
 <div class="field"><label for="tMode">做T方式</label><select id="tMode"><option value="positive">正T：先买后卖</option><option value="reverse">反T：先卖后买</option></select></div>
-<div class="field"><label for="tQty">做T数量（股 / 份）</label><input id="tQty" type="number" min="1" step="1" value="1000"></div>
-<div class="field"><label for="holdQty">原持仓数量（股 / 份）</label><input id="holdQty" type="number" min="0" step="1" value="5000"></div>
-<div class="field"><label for="holdCost">原持仓成本价（元）</label><input id="holdCost" type="number" min="0" step="0.001" value="10"></div>
-<div class="field"><label for="buyPrice">本次买入 / 买回价格（元）</label><input id="buyPrice" type="number" min="0" step="0.001" value="9.8"></div>
-<div class="field"><label for="sellPrice">本次卖出价格（元）</label><input id="sellPrice" type="number" min="0" step="0.001" value="10.2"></div>
+<div class="field"><label for="tQty">做T数量（股 / 份）</label><input id="tQty" type="number" min="1" step="1" placeholder="请输入做T数量"></div>
+<div class="field"><label for="holdQty">原持仓数量（股 / 份）</label><input id="holdQty" type="number" min="0" step="1" placeholder="请输入原持仓数量"></div>
+<div class="field"><label for="holdCost">原持仓成本价（元）</label><input id="holdCost" type="number" min="0" step="0.001" placeholder="请输入原持仓成本价"></div>
+<div class="field"><label for="buyPrice">本次买入 / 买回价格（元）</label><input id="buyPrice" type="number" min="0" step="0.001" placeholder="请输入买入 / 买回价格"></div>
+<div class="field"><label for="sellPrice">本次卖出价格（元）</label><input id="sellPrice" type="number" min="0" step="0.001" placeholder="请输入卖出价格"></div>
 </div>
 <div class="results">
 <div class="metric"><span>做T毛利润</span><strong id="tGross">—</strong></div>
@@ -98,6 +98,7 @@ function feeParts(type,market,amount,side){
 }
 function updateFees(){
  const type=$("feeType").value,market=$("feeMarket").value,p=num("feePrice"),q=num("feeQty"),amount=p*q;
+ if(!p||!q){["feeBuy","feeSell","feeTotal","feeBuyCost","feeSellNet","feeBreakeven"].forEach(id=>$(id).textContent="待输入");$("feeBreakdown").innerHTML='<div class="rowline"><span>提示</span><b>请输入成交价格和成交数量后自动计算。</b></div>';return;}
  const b=feeParts(type,market,amount,"buy"),s=feeParts(type,market,amount,"sell");
  $("feeBuy").textContent=money(b.total);$("feeSell").textContent=money(s.total);$("feeTotal").textContent=money(b.total+s.total);
  $("feeBuyCost").textContent=money(amount+b.total);$("feeSellNet").textContent=money(amount-s.total);
