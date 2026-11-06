@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090713">
+  <meta name="description" content="个人主页 · 技术探索 · 项目作品">
+  <title>YQH · 个人主页</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090713;--panel:#141023;--line:#302344;--text:#f5f0ff;--muted:#aaa0bd;--purple:#a78bfa;--pink:#e879f9}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#32145a 0,transparent 38%),radial-gradient(ellipse at 0% 55%,#19113b 0,transparent 32%),var(--bg);color:var(--text);font:16px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}.wrap{width:min(1080px,90%);margin:auto}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff12}.logo{font-weight:800;letter-spacing:2px;color:var(--purple)}.navlinks{display:flex;gap:25px;color:var(--muted);font-size:14px}.navlinks a:hover{color:white}
+    .hero{padding:112px 0 92px;min-height:520px;display:flex;flex-direction:column;justify-content:center}.eyebrow{color:var(--pink);font-size:13px;letter-spacing:3px;text-transform:uppercase}.hero h1{font-size:clamp(42px,8vw,78px);line-height:1.12;margin:18px 0;letter-spacing:-2px}.gradient{background:linear-gradient(100deg,#c4b5fd,#e879f9);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:620px;color:var(--muted);font-size:18px}.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}.btn{padding:11px 20px;border:1px solid var(--line);border-radius:12px;background:#ffffff08}.btn.primary{background:linear-gradient(100deg,#7c3aed,#a855f7);border:0;font-weight:650}.btn:hover{transform:translateY(-2px);transition:.2s}
+    section{padding:58px 0}.section-title{font-size:28px;margin:0 0 8px}.sub{color:var(--muted);margin:0 0 26px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{padding:23px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#1a142b,#100d1b);min-height:160px}.card .symbol{font-size:24px}.card h3{margin:12px 0 6px}.card p{margin:0;color:var(--muted);font-size:14px}.tags{display:flex;gap:9px;flex-wrap:wrap}.tag{padding:7px 12px;border:1px solid var(--line);border-radius:99px;color:#d8cafa;background:#ffffff06;font-size:13px}
+    .about{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}.terminal{border:1px solid var(--line);border-radius:16px;background:#0c0a14;padding:20px;color:#c4b5fd;font:13px/2 ui-monospace,monospace;box-shadow:0 20px 70px #0005}.terminal span{color:#86efac}.contact{padding:28px;border:1px solid var(--line);border-radius:18px;background:#ffffff08;display:flex;justify-content:space-between;align-items:center;gap:20px}.footer{padding:28px 0 40px;border-top:1px solid #ffffff12;color:var(--muted);font-size:13px}
+    @media(max-width:700px){.navlinks{gap:12px;font-size:12px}.hero{padding:82px 0 65px;min-height:440px}.grid{grid-template-columns:1fr}.about{grid-template-columns:1fr}.contact{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header class="wrap nav">
+    <a class="logo" href="#">YQH<span class="gradient">.</span></a>
+    <nav class="navlinks" aria-label="主导航"><a href="#about">关于</a><a href="#projects">项目</a><a href="#skills">技能</a><a href="#contact">联系</a></nav>
+  </header>
+  <main>
+    <section class="wrap hero">
+      <div class="eyebrow">WELCOME TO MY SPACE</div>
+      <h1>你好，我是 <span class="gradient">YQH</span><br>探索技术，创造可能。</h1>
+      <p>这里是我的个人数字空间，用来记录技术学习、展示项目作品，也分享每一次新的尝试。</p>
+      <div class="actions"><a class="btn primary" href="#projects">探索我的项目 ↗</a><a class="btn" href="https://github.com/yqh330" target="_blank" rel="noopener noreferrer">访问 GitHub</a></div>
+    </section>
+    <section class="wrap" id="about">
+      <div class="about">
+        <div><h2 class="section-title">关于我</h2><p class="sub">保持好奇，持续学习，动手实践。</p><p>我喜欢研究互联网技术、网页开发与数字工具。这个主页会逐步收录我的作品、学习笔记和正在探索的方向。</p></div>
+        <div class="terminal" aria-label="终端风格代码卡片"><div>┌─ yqh@workspace ~</div><div>│ <span>$</span> whoami</div><div>│ curious developer</div><div>│ <span>$</span> focus</div><div>│ web · code · security</div><div>│ <span>$</span> status</div><div>└─ always_learning ▌</div></div>
+      </div>
+    </section>
+    <section class="wrap" id="projects">
+      <h2 class="section-title">项目与作品</h2><p class="sub">一些值得记录的实践，后续持续更新。</p>
+      <div class="grid">
+        <article class="card"><div class="symbol">⌘</div><h3>网页实验室</h3><p>记录 HTML、CSS、JavaScript 的学习与创作。</p></article>
+        <article class="card"><div class="symbol">⌁</div><h3>技术笔记</h3><p>整理开发经验、问题解决过程与实用工具。</p></article>
+        <article class="card"><div class="symbol">◈</div><h3>安全探索</h3><p>在合法授权环境中学习网络与 Web 安全知识。</p></article>
+      </div>
+    </section>
+    <section class="wrap" id="skills">
+      <h2 class="section-title">正在探索</h2><p class="sub">持续积累，让想法变成真实作品。</p>
+      <div class="tags"><span class="tag">HTML / CSS</span><span class="tag">JavaScript</span><span class="tag">Git & GitHub</span><span class="tag">Web 开发</span><span class="tag">网络安全基础</span><span class="tag">持续学习</span></div>
+    </section>
+    <section class="wrap" id="contact">
+      <div class="contact"><div><h2 class="section-title">保持联系</h2><p class="sub" style="margin:4px 0 0">欢迎访问我的 GitHub，看看最近在做什么。</p></div><a class="btn primary" href="https://github.com/yqh330" target="_blank" rel="noopener noreferrer">GitHub 主页 ↗</a></div>
+    </section>
+  </main>
+  <footer class="wrap footer">© <span id="year"></span> YQH · Built with curiosity.</footer>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
