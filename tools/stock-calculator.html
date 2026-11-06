@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b14">
+<meta name="description" content="A股与ETF交易手续费、正T反T、持仓成本和盈亏计算器。">
+<title>股票交易计算器 · Y 的个人空间</title>
+<style>
+:root{color-scheme:dark;--bg:#090b14;--panel:#12182a;--panel2:#0d1322;--line:rgba(166,151,255,.2);--text:#f4f3ff;--muted:#a4a8bf;--purple:#a78bfa;--cyan:#67e8f9;--green:#34d399;--red:#fb7185}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#7c3aed25,transparent 38%),radial-gradient(ellipse at 100% 75%,#0ea5e91a,transparent 35%),var(--bg);color:var(--text);font:15px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--cyan);text-decoration:none}.wrap{width:min(1050px,calc(100% - 30px));margin:auto}.top{padding:22px 0 12px;display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-weight:800;letter-spacing:.04em}.back{font-size:13px;color:var(--muted)}.hero{padding:26px 0 22px}.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--cyan)}h1{font-size:clamp(30px,6vw,46px);line-height:1.2;margin:8px 0}.sub{color:var(--muted);max-width:720px;margin:0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}.tab{border:1px solid var(--line);background:#111629;color:var(--muted);padding:10px 16px;border-radius:12px;cursor:pointer;font:inherit}.tab.active{background:linear-gradient(110deg,#7c3aed,#4f46e5);color:white;border-color:transparent}
+.panel{background:linear-gradient(145deg,#151a2cdd,#0e1220ee);border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 18px;box-shadow:0 18px 50px #0002}.panel h2{font-size:20px;margin:0 0 5px}.hint{font-size:13px;color:var(--muted);margin:0 0 17px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:13px;color:#c8c8dc}.field input,.field select{width:100%;background:#090e1b;border:1px solid #343954;border-radius:10px;color:white;padding:11px 12px;font:inherit;min-width:0}.field input:focus,.field select:focus{outline:2px solid #8b5cf6;border-color:transparent}.unit{font-size:11px;color:var(--muted)}.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:17px}.metric{background:#090e1b;border:1px solid var(--line);border-radius:13px;padding:13px}.metric span{display:block;color:var(--muted);font-size:12px}.metric strong{font-size:21px;display:block;margin-top:3px;overflow-wrap:anywhere}.good{color:var(--green)}.bad{color:var(--red)}.neutral{color:var(--cyan)}.rows{margin-top:15px;border-top:1px solid var(--line);padding-top:12px}.rowline{display:flex;justify-content:space-between;gap:15px;padding:5px 0;color:var(--muted);font-size:13px}.rowline b{color:var(--text);font-weight:600;text-align:right}.note{border-left:3px solid #8b5cf6;background:#a78bfa12;padding:11px 13px;border-radius:0 10px 10px 0;color:#c8c8dc;font-size:12px;margin-top:14px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.btn{border:1px solid var(--line);background:#a78bfa18;color:#e9ddff;padding:9px 13px;border-radius:10px;cursor:pointer;font:inherit}.btn:hover{background:#a78bfa30}.hidden{display:none!important}.footer{color:#777f9b;font-size:12px;padding:18px 0 35px;text-align:center}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.results{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:15px}.metric strong{font-size:18px}.top{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><a class="brand" href="/">Y / STOCK TOOLS</a><a class="back" href="/projects.html">← 返回项目展示</a></header>
+<section class="hero"><div class="eyebrow">TRADING COST & T CALCULATOR</div><h1>股票交易计算器<span style="color:#67e8f9">.</span></h1><p class="sub">A股 / ETF 手续费、正T反T、持仓成本与实际盈亏，一页完成计算。费率按你的券商标准预设，可随时修改。</p></section>
+<div class="tabs" role="tablist"><button class="tab active" data-tab="fees">手续费计算</button><button class="tab" data-tab="tcalc">做T计算</button><button class="tab" data-tab="settings">费率设置</button></div>
+
+<section id="fees" class="panel">
+<h2>交易手续费计算</h2><p class="hint">输入成交价格和数量，自动计算买入、卖出及双向总费用。</p>
+<div class="grid">
+<div class="field"><label for="feeType">交易品种</label><select id="feeType"><option value="stock">A股</option><option value="etf">ETF</option></select></div>
+<div class="field"><label for="feeMarket">交易市场</label><select id="feeMarket"><option value="sh">沪市</option><option value="sz">深市</option><option value="bj">北交所（按A股费率估算）</option></select></div>
+<div class="field"><label for="feePrice">成交价格（元）</label><input id="feePrice" type="number" min="0" step="0.001" value="10"></div>
+<div class="field"><label for="feeQty">成交数量（股 / 份）</label><input id="feeQty" type="number" min="0" step="1" value="1000"></div>
+</div>
+<div class="results">
+<div class="metric"><span>买入费用</span><strong id="feeBuy" class="neutral">—</strong></div>
+<div class="metric"><span>卖出费用</span><strong id="feeSell" class="neutral">—</strong></div>
+<div class="metric"><span>双向总费用</span><strong id="feeTotal" class="bad">—</strong></div>
+<div class="metric"><span>买入实际支出</span><strong id="feeBuyCost">—</strong></div>
+<div class="metric"><span>卖出实际到账</span><strong id="feeSellNet">—</strong></div>
+<div class="metric"><span>往返保本卖价</span><strong id="feeBreakeven" class="good">—</strong></div>
+</div>
+<div class="rows" id="feeBreakdown"></div>
+<div class="note">说明：按单笔委托分别计算最低佣金。A股印花税仅卖出收取；沪市A股按你提供的费率计过户费，深市不计。ETF按你提供的规则不计印花税和过户费。</div>
+</section>
+
+<section id="tcalc" class="panel hidden">
+<h2>正T / 反T计算</h2><p class="hint">按同一数量完成一买一卖，计算扣费后的做T利润，以及现金流口径的持仓摊薄成本。</p>
+<div class="grid">
+<div class="field"><label for="tType">交易品种</label><select id="tType"><option value="stock">A股</option><option value="etf">ETF</option></select></div>
+<div class="field"><label for="tMarket">交易市场</label><select id="tMarket"><option value="sh">沪市</option><option value="sz">深市</option><option value="bj">北交所（按A股费率估算）</option></select></div>
+<div class="field"><label for="tMode">做T方式</label><select id="tMode"><option value="positive">正T：先买后卖</option><option value="reverse">反T：先卖后买</option></select></div>
+<div class="field"><label for="tQty">做T数量（股 / 份）</label><input id="tQty" type="number" min="1" step="1" value="1000"></div>
+<div class="field"><label for="holdQty">原持仓数量（股 / 份）</label><input id="holdQty" type="number" min="0" step="1" value="5000"></div>
+<div class="field"><label for="holdCost">原持仓成本价（元）</label><input id="holdCost" type="number" min="0" step="0.001" value="10"></div>
+<div class="field"><label for="buyPrice">本次买入 / 买回价格（元）</label><input id="buyPrice" type="number" min="0" step="0.001" value="9.8"></div>
+<div class="field"><label for="sellPrice">本次卖出价格（元）</label><input id="sellPrice" type="number" min="0" step="0.001" value="10.2"></div>
+</div>
+<div class="results">
+<div class="metric"><span>做T毛利润</span><strong id="tGross">—</strong></div>
+<div class="metric"><span>本次总手续费</span><strong id="tFees">—</strong></div>
+<div class="metric"><span>做T实际净利润</span><strong id="tNet">—</strong></div>
+<div class="metric"><span>做T后持仓数量</span><strong id="tEndQty">—</strong></div>
+<div class="metric"><span>做T后摊薄成本价</span><strong id="tEndCost">—</strong></div>
+<div class="metric"><span>做T净收益率</span><strong id="tRate">—</strong></div>
+</div>
+<div class="rows" id="tBreakdown"></div>
+<div class="note" id="tRuleNote">A股普通股票实行T+1：正T时，当天买入的股票不能当天卖出；需要卖出原有可用持仓。请确认可卖数量足够。部分ETF支持T+0，部分ETF不支持，需以具体基金交易规则为准。本工具按输入的买卖两笔成交测算，不会自动判断证券代码的回转资格。</div>
+</section>
+
+<section id="settings" class="panel hidden">
+<h2>费率设置</h2><p class="hint">初始值来自你提供的券商费率。修改后仅保存在当前浏览器，不会上传。</p>
+<div class="grid">
+<div class="field"><label for="stockRate">A股佣金（%）</label><input id="stockRate" type="number" min="0" step="0.00001" value="0.00691"></div>
+<div class="field"><label for="stockMin">A股最低佣金（元 / 笔）</label><input id="stockMin" type="number" min="0" step="0.01" value="5"></div>
+<div class="field"><label for="etfRate">ETF佣金（%）</label><input id="etfRate" type="number" min="0" step="0.00001" value="0.005"></div>
+<div class="field"><label for="etfMin">ETF最低佣金（元 / 笔）</label><input id="etfMin" type="number" min="0" step="0.01" value="0.1"></div>
+<div class="field"><label for="stampRate">印花税（%）</label><input id="stampRate" type="number" min="0" step="0.00001" value="0.05"></div>
+<div class="field"><label for="transferRate">沪市A股过户费（%）</label><input id="transferRate" type="number" min="0" step="0.00001" value="0.001"></div>
+</div>
+<div class="actions"><button class="btn" id="saveSettings">保存费率</button><button class="btn" id="resetSettings">恢复初始费率</button></div>
+<div class="note">费率百分比按百分数输入，例如 0.00691 表示 0.00691%，程序会自动换算。若券商佣金报价是否包含规费存在差异，请以交割单为准，避免重复计费。</div>
+</section>
+<footer class="footer">仅供交易成本测算与学习参考，不构成投资建议。请以券商实际交割单及交易所最新规则为准。</footer>
+</div>
+<script>
+const defaults={stockRate:0.00691,stockMin:5,etfRate:0.005,etfMin:0.1,stampRate:0.05,transferRate:0.001};
+let rates={...defaults};
+const $=id=>document.getElementById(id);
+const num=id=>Math.max(0,Number($(id).value)||0);
+const money=n=>(Number.isFinite(n)?n:0).toFixed(2)+" 元";
+const price=n=>(Number.isFinite(n)?n:0).toFixed(4)+" 元";
+const pct=n=>(Number.isFinite(n)?n:0).toFixed(3)+"%";
+function feeParts(type,market,amount,side){
+ const isETF=type==="etf";
+ const rate=(isETF?rates.etfRate:rates.stockRate)/100;
+ const min=isETF?rates.etfMin:rates.stockMin;
+ const commission=amount>0?Math.max(amount*rate,min):0;
+ const stamp=!isETF&&side==="sell"?amount*rates.stampRate/100:0;
+ const transfer=!isETF&&market==="sh"?amount*rates.transferRate/100:0;
+ return {commission,stamp,transfer,total:commission+stamp+transfer};
+}
+function updateFees(){
+ const type=$("feeType").value,market=$("feeMarket").value,p=num("feePrice"),q=num("feeQty"),amount=p*q;
+ const b=feeParts(type,market,amount,"buy"),s=feeParts(type,market,amount,"sell");
+ $("feeBuy").textContent=money(b.total);$("feeSell").textContent=money(s.total);$("feeTotal").textContent=money(b.total+s.total);
+ $("feeBuyCost").textContent=money(amount+b.total);$("feeSellNet").textContent=money(amount-s.total);
+ let lo=0,hi=Math.max(p*3,1);for(let i=0;i<80;i++){const mid=(lo+hi)/2;const sf=feeParts(type,market,mid*q,"sell").total;if(mid*q-sf>=amount+b.total)hi=mid;else lo=mid;}
+ $("feeBreakeven").textContent=price(hi);
+ $("feeBreakdown").innerHTML='<div class="rowline"><span>买入佣金</span><b>'+money(b.commission)+'</b></div><div class="rowline"><span>买入过户费</span><b>'+money(b.transfer)+'</b></div><div class="rowline"><span>卖出佣金</span><b>'+money(s.commission)+'</b></div><div class="rowline"><span>卖出印花税</span><b>'+money(s.stamp)+'</b></div><div class="rowline"><span>卖出过户费</span><b>'+money(s.transfer)+'</b></div>';
+}
+function updateT(){
+ const type=$("tType").value,market=$("tMarket").value,mode=$("tMode").value,q=num("tQty"),hq=num("holdQty"),cost=num("holdCost"),bp=num("buyPrice"),sp=num("sellPrice");
+ const invalid=q<=0||hq<q||cost<=0||bp<=0||sp<=0;
+ if(invalid){["tGross","tFees","tNet","tEndQty","tEndCost","tRate"].forEach(id=>$(id).textContent="请检查输入");$("tBreakdown").innerHTML='<div class="rowline"><span>提示</span><b>做T数量需大于0，且不能超过原持仓；价格和原成本需大于0。</b></div>';return;}
+ const buyAmount=q*bp,sellAmount=q*sp;
+ const buy=feeParts(type,market,buyAmount,"buy"),sell=feeParts(type,market,sellAmount,"sell");
+ const fees=buy.total+sell.total;
+ const gross=mode==="positive"?(sp-bp)*q:(sp-bp)*q;
+ const net=gross-fees;
+ const endQty=hq;
+ // Cash-flow adjusted average cost: original capital + buy cash outflow - sell cash inflow + both-side fees.
+ const netInvested=hq*cost+buyAmount+buy.total-sellAmount+sell.total;
+ const endCost=netInvested/endQty;
+ $("tGross").textContent=money(gross);$("tGross").className=gross>=0?"good":"bad";
+ $("tFees").textContent=money(fees);$("tNet").textContent=money(net);$("tNet").className=net>=0?"good":"bad";
+ $("tEndQty").textContent=Math.round(endQty).toLocaleString("zh-CN")+" 股 / 份";
+ $("tEndCost").textContent=price(endCost);$("tRate").textContent=pct((net/(q*bp||1))*100);
+ const first=mode==="positive"?"先买入":"先卖出",second=mode==="positive"?"后卖出":"后买入";
+ $("tBreakdown").innerHTML='<div class="rowline"><span>交易顺序</span><b>'+first+'，'+second+'</b></div><div class="rowline"><span>买入 / 买回金额</span><b>'+money(buyAmount)+'</b></div><div class="rowline"><span>卖出金额</span><b>'+money(sellAmount)+'</b></div><div class="rowline"><span>买入侧费用（佣金'+(type==="stock"&&market==="sh"?' + 过户费':'')+'）</span><b>'+money(buy.total)+'</b></div><div class="rowline"><span>卖出侧费用（佣金'+(type==="stock"?' + 印花税'+(market==="sh"?' + 过户费':''):'')+'）</span><b>'+money(sell.total)+'</b></div><div class="rowline"><span>持仓现金流调整</span><b>'+money(netInvested)+'</b></div>';
+ $("tRuleNote").textContent=type==="stock"?"A股普通股票实行T+1：正T先买后卖时，当天新买入的股票不能当天卖出，本计算假设卖出的是原有可用持仓；请确保原持仓可卖数量不少于做T数量。反T卖出后买回通常需要先有可卖持仓。":"ETF是否支持T+0取决于具体品种（例如部分跨境、债券、货币类ETF可当日回转，部分股票ETF通常为T+1）。本计算器按你输入的两笔成交测算，请确认该ETF的交易规则。";
+}
+function renderAll(){updateFees();updateT();}
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===btn));["fees","tcalc","settings"].forEach(id=>$(id).classList.toggle("hidden",id!==btn.dataset.tab));}));
+function loadRates(){Object.keys(defaults).forEach(k=>$(k).value=rates[k]);}
+$("saveSettings").addEventListener("click",()=>{Object.keys(defaults).forEach(k=>rates[k]=Math.max(0,Number($(k).value)||0));try{localStorage.setItem("yStockCalcRates",JSON.stringify(rates));}catch(e){}renderAll();alert("费率已保存");});
+$("resetSettings").addEventListener("click",()=>{rates={...defaults};loadRates();try{localStorage.removeItem("yStockCalcRates");}catch(e){}renderAll();});
+try{const saved=JSON.parse(localStorage.getItem("yStockCalcRates")||"null");if(saved)rates={...defaults,...saved};}catch(e){}
+loadRates();
+document.querySelectorAll("input,select").forEach(el=>el.addEventListener("input",renderAll));
+renderAll();
+</script>
+</body></html>
