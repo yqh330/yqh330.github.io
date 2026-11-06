@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YQH · 杨庆海</title>
+<meta name="description" content="YQH 的个人主页：写点代码，玩点游戏，打打乒乓球。人在合肥。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230B1722'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' fill='%23E7B33F' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --paper:#0B1722;
+    --panel:#0F2030;
+    --line:#1C3A4C;
+    --ink:#E7EFF4;
+    --muted:#8FA6B4;
+    --accent:#E7B33F;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+  body{
+    margin:0;
+    background-color:var(--paper);
+    background-image:radial-gradient(circle at 1px 1px, rgba(231,179,63,.07) 1px, transparent 0);
+    background-size:28px 28px;
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:16px;
+    line-height:1.8;
+  }
+
+  a{color:var(--ink);text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  .wrap{max-width:780px;margin:0 auto;padding:0 22px}
+
+  /* ---------- 顶部导航 ---------- */
+  .site-head{
+    border-bottom:1px solid var(--line);
+  }
+  .site-head .wrap{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;
+    padding-top:16px;padding-bottom:16px;
+  }
+  .mark{
+    font-family:Georgia,"Songti SC","Noto Serif SC",serif;
+    font-size:17px;letter-spacing:.06em;
+    margin-right:auto;
+  }
+  .mark span{color:var(--accent)}
+  .nav{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:14px;color:var(--muted)}
+  .nav a{padding:2px 0;border-bottom:1px solid transparent;transition:color .18s,border-color .18s}
+  .nav a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* ---------- 首屏 ---------- */
+  .hero{padding:64px 0 56px}
+  .hero h1{
+    font-family:Georgia,"Songti SC","Noto Serif SC",serif;
+    font-weight:400;
+    font-size:clamp(46px,13vw,86px);
+    line-height:.98;
+    letter-spacing:.02em;
+    margin:0;
+  }
+  .hero .rule{width:56px;height:2px;background:var(--accent);margin:28px 0 26px}
+  .hero p{
+    max-width:32em;margin:0;font-size:17px;color:var(--ink);
+  }
+  .hero p + p{margin-top:10px;color:var(--muted);font-size:15px}
+  .hero .links{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:32px;font-size:15px}
+  .hero .links a{
+    border-bottom:1px solid var(--line);padding-bottom:2px;
+    transition:border-color .18s,color .18s;
+  }
+  .hero .links a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* ---------- 通用分节 ---------- */
+  section{padding:44px 0;border-top:1px solid var(--line)}
+  h2{
+    font-size:15px;font-weight:600;letter-spacing:.14em;color:var(--muted);
+    margin:0 0 22px;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  }
+  .prose{max-width:34em;color:var(--ink)}
+  .prose p{margin:0 0 14px}
+  .prose p:last-child{margin-bottom:0}
+
+  /* ---------- 项目 ---------- */
+  .cards{display:grid;grid-template-columns:1fr;gap:14px}
+  .card{
+    display:block;background:var(--panel);border:1px solid var(--line);border-radius:2px;
+    padding:20px 18px;transition:border-color .18s,transform .18s;
+  }
+  .card:hover{border-color:var(--accent)}
+  .card h3{margin:0 0 8px;font-size:16px;font-weight:600;letter-spacing:.01em}
+  .card p{margin:0 0 14px;font-size:14px;color:var(--muted);line-height:1.7}
+  .card .meta{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12px;color:var(--accent);letter-spacing:.04em;
+  }
+
+  /* ---------- 技能 ---------- */
+  .skills{display:flex;flex-wrap:wrap;gap:8px}
+  .skill{
+    border:1px solid var(--line);border-radius:2px;
+    padding:5px 11px;font-size:13px;color:var(--muted);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+
+  /* ---------- 现在在做 ---------- */
+  .now-list{margin:0;padding:0;list-style:none}
+  .now-list li{
+    display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line);
+    font-size:15px;
+  }
+  .now-list li:last-child{border-bottom:none}
+  .now-list .dot{
+    flex:0 0 auto;width:6px;height:6px;background:var(--accent);margin-top:12px;border-radius:50%;
+  }
+  .now-list .txt{min-width:0;color:var(--ink)}
+  .now-list .when{
+    margin-left:auto;flex:0 0 auto;font-size:13px;color:var(--muted);
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+  }
+
+  /* ---------- 联系 ---------- */
+  .contact a{
+    display:inline-block;font-family:Georgia,"Songti SC",serif;font-size:22px;
+    border-bottom:1px solid var(--accent);padding-bottom:2px;
+    transition:color .18s;
+  }
+  .contact a:hover{color:var(--accent)}
+  .contact .note{margin-top:14px;font-size:13px;color:var(--muted);max-width:34em}
+
+  /* ---------- 页脚 ---------- */
+  .site-foot{
+    border-top:1px solid var(--line);padding:26px 0 40px;
+    font-size:13px;color:var(--muted);
+  }
+  .site-foot .wrap{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+
+  @media (min-width:720px){
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .hero{padding:88px 0 72px}
+    h2{margin-bottom:26px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap">
+    <div class="mark">YQH<span>.</span></div>
+    <nav class="nav">
+      <a href="#about">关于</a>
+      <a href="#work">项目</a>
+      <a href="#skills">技能</a>
+      <a href="#now">现在在做</a>
+      <a href="#contact">联系</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ===== 首屏 ===== -->
+    <!-- 说明：下面两段文案、以及各区块里的项目名和技术栈，按你自己的情况改掉再推上去。
+         另外，别忘在“联系”区加一个真实邮箱，现在的 example 地址发邮件是收不到的。 -->
+    <section class="hero" style="border-top:none">
+      <h1>杨庆海</h1>
+      <div class="rule"></div>
+      <p>写点代码，玩点游戏，打打乒乓球。这个页面是我在网上的落脚点，放做出来的东西和正在折腾的事。</p>
+      <p>人在合肥。电子信息专业出来，白天对着工单和表格，晚上折腾脚本、刷机和一点点前端。</p>
+      <div class="links">
+        <a href="https://github.com/yqh">GitHub</a>
+        <a href="#work">看项目</a>
+        <a href="#contact">找我</a>
+      </div>
+    </section>
+
+    <!-- ===== 关于 ===== -->
+    <section id="about">
+      <h2>关于</h2>
+      <div class="prose">
+        <p>从安徽电子信息职业技术学院毕业后，一直在合肥。现在的工作是快递客服，每天处理顺丰的工单和异常件，重复动作多，所以习惯把能自动化的部分写成小工具。</p>
+        <p>对两件事有持续的耐心：一是把设备按自己的想法改造——刷机、面具、Termux 里跑脚本；二是把散乱的数据理成一张能直接用的表。技术栈不算深，但肯动手试，也肯把踩过的坑记下来。</p>
+        <p>不忙的时候打乒乓球，或者开一局游戏。</p>
+      </div>
+    </section>
+
+    <!-- ===== 项目 ===== -->
+    <section id="work">
+      <h2>项目</h2>
+      <div class="cards">
+        <a class="card" href="https://github.com/yqh?tab=repositories">
+          <h3>工单查询小工具</h3>
+          <p>把重复的单号查询压成一次输入，省掉来回切窗口复制粘贴。</p>
+          <div class="meta">Python · Excel</div>
+        </a>
+        <a class="card" href="https://github.com/yqh">
+          <h3>这个主页</h3>
+          <p>手写 HTML 和 CSS，没有框架没有构建，一个文件放到仓库里就能开。</p>
+          <div class="meta">HTML · CSS · GitHub Pages</div>
+        </a>
+        <a class="card" href="https://github.com/yqh?tab=repositories">
+          <h3>刷机与自动化笔记</h3>
+          <p>记录几台设备刷机、面具、Termux 自动化的完整过程，附上能复用的命令。</p>
+          <div class="meta">Markdown · Termux</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===== 技能 ===== -->
+    <section id="skills">
+      <h2>在用的东西</h2>
+      <div class="skills">
+        <span class="skill">HTML / CSS</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">Python</span>
+        <span class="skill">Excel 公式与清洗</span>
+        <span class="skill">Termux</span>
+        <span class="skill">Android 刷机 / Magisk</span>
+        <span class="skill">Git / GitHub</span>
+        <span class="skill">图片与表格提取</span>
+      </div>
+    </section>
+
+    <!-- ===== 现在在做 ===== -->
+    <section id="now">
+      <h2>现在在做</h2>
+      <ul class="now-list">
+        <li><span class="dot" aria-hidden="true"></span><span class="txt">把客服流程里重复的几步用脚本串起来，少点几次鼠标</span><span class="when">进行中</span></li>
+        <li><span class="dot" aria-hidden="true"></span><span class="txt">补前端交互这一块：把只会静态页面的部分练到能写组件</span><span class="when">持续</span></li>
+        <li><span class="dot" aria-hidden="true"></span><span class="txt">整理仓库：每个项目补 README、写清怎么跑起来</span><span class="when">本周</span></li>
+      </ul>
+    </section>
+
+    <!-- ===== 联系 ===== -->
+    <section id="contact" class="contact">
+      <h2>联系</h2>
+      <a href="https://github.com/yqh">github.com/yqh</a>
+      <p class="note">提 issue、发消息都行，代码上的问题直接贴报错日志，比描述快。合作或咨询可以发邮件。</p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>YQH · 合肥</div>
+    <div>托管于 GitHub Pages</div>
+  </div>
+</footer>
+
+</body>
+</html>
