@@ -1,9 +1,10 @@
-name: Deploy to GitHub Pages
+name: Deploy main site and dev preview
 
 on:
   push:
     branches:
       - main
+      - dev
   workflow_dispatch:
 
 permissions:
@@ -22,16 +23,28 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout main website
         uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+
+      - name: Checkout dev branch for preview
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          path: site/dev-preview
+
+      - name: Remove nested Git metadata
+        run: rm -rf site/dev-preview/.git
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload website files
+      - name: Upload website and dev preview
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: site
 
       - name: Deploy website
         id: deployment
