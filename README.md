@@ -9,7 +9,7 @@
 - `index.html` — 网站首页
 - `about.html` — 关于我
 - `projects.html` — 项目展示
-- `guestbook.html` — 留言板（Waline，支持免账号留言）
+- `guestbook.html` — 留言板（Utterances）
 - `contact.html` — 联系方式
 - `404.html` — 自定义错误页面
 - `assets/css/style.css` — 全站样式
@@ -18,7 +18,7 @@
 
 ## 留言板启用
 
-留言板前端使用 Waline，访客无需 GitHub 账号即可留言。需要先部署 Waline Server 并连接数据库，再将服务端地址填入 `guestbook.html`。详细步骤见 [`docs/WALINE-SETUP.md`](docs/WALINE-SETUP.md)。
+留言板使用 Utterances 将 GitHub Issues 作为留言存储。请在仓库设置中启用 Issues，并安装 [Utterances GitHub App](https://github.com/apps/utterances)。访客需要 GitHub 账号才能发布留言。留言内容公开显示，请勿发布隐私信息。
 
 ## 部署
 
