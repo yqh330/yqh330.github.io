@@ -1,6 +1,6 @@
-# Y 的个人空间
+# 庆海 · 温柔小站
 
-一个使用原生 HTML、CSS 和 JavaScript 构建的响应式个人网站。
+一个使用原生 HTML、CSS 和 JavaScript 构建的响应式个人网站，采用自然背景与液态玻璃视觉主题。
 
 🌐 **在线访问：** https://yqh330.github.io/
 
