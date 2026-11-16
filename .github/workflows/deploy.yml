@@ -1,10 +1,11 @@
-name: Deploy main site and dev preview
+name: Deploy main site, dev preview and doubao preview
 
 on:
   push:
     branches:
       - main
       - dev
+      - doubao
   workflow_dispatch:
 
 permissions:
@@ -35,13 +36,22 @@ jobs:
           ref: dev
           path: site/dev-preview
 
+      - name: Checkout doubao branch for preview
+        uses: actions/checkout@v4
+        with:
+          ref: doubao
+          path: site/doubao-preview
+
       - name: Remove nested Git metadata
-        run: rm -rf site/dev-preview/.git
+        run: |
+          rm -rf site/dev-preview/.git
+          rm -rf site/doubao-preview/.git
+          rm -rf site/doubao-preview/.github
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload website and dev preview
+      - name: Upload website and previews
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
